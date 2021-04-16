@@ -36,8 +36,7 @@ public abstract class ChatHudMixin
 			method = "render",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/hud/ChatHud;fill(IIIII)V",
-					ordinal = 1
+					target = "Lnet/minecraft/client/gui/hud/ChatHud;fill(IIIII)V"
 			)
 	)
 	private void makeSureTheScrollBarIsVisible(Args args)
