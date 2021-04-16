@@ -3,6 +3,8 @@ package me.fallenbreath.raisechatlimit.mixins;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -17,10 +19,10 @@ import java.util.List;
 public abstract class ChatHudMixin
 {
 	@Mutable
-	@Shadow @Final private List<ChatHudLine> messages;
+	@Shadow @Final private List<ChatHudLine<Text>> messages;
 
 	@Mutable
-	@Shadow @Final private List<ChatHudLine> visibleMessages;
+	@Shadow @Final private List<ChatHudLine<OrderedText>> visibleMessages;
 
 	@ModifyConstant(
 			method = "addMessage(Lnet/minecraft/text/Text;IIZ)V",
@@ -36,13 +38,13 @@ public abstract class ChatHudMixin
 			method = "render",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/hud/ChatHud;fill(IIIII)V"
+					target = "Lnet/minecraft/client/gui/hud/ChatHud;fill(Lnet/minecraft/client/util/math/MatrixStack;IIIII)V"
 			)
 	)
 	private void makeSureTheScrollBarIsVisible(Args args)
 	{
-		int y1 = args.get(1);
-		int y2 = args.get(3);
+		int y1 = args.get(2);
+		int y2 = args.get(4);
 		// it's too short (length = 0)
 		if (y1 == y2)
 		{
@@ -54,8 +56,8 @@ public abstract class ChatHudMixin
 			{
 				y2--;
 			}
-			args.set(1, y1);
-			args.set(3, y2);
+			args.set(2, y1);
+			args.set(4, y2);
 		}
 	}
 
