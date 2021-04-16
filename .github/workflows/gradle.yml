@@ -6,6 +6,7 @@ name: Java CI with Gradle
 on: 
   push:
     paths:
+    - "build.gradle"
     - "src/**"
     - ".github/workflows/**"
   pull_request:
