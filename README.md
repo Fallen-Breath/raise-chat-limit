@@ -1,3 +1,7 @@
+It's bundled in [TweakerMore](https://github.com/Fallen-Breath/tweakermore) now
+
+---
+
 ## raise-chat-limit
 
 Tweaks client chat message limit from 100 to 5000
